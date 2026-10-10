@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#2049C7">
+<meta name="description" content="حاسبتي — آلة حاسبة مصممة لطلاب الثانوية: حسابات، دوال، معادلات، متتاليات ورسم بياني.">
+<title>حاسبتي — آلة حاسبة للثانوية</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#F7F5F0;--surface:#fff;--ink:#18181B;--muted:#71717A;
+  --border:#E4E1D8;--blue:#2049C7;--blue-soft:#EAEEFB;
+  --green:#157F5D;--green-soft:#E4F4EE;
+  --red:#A83A2C;--red-soft:#F8E9E6;
+  --purple:#6B3FA0;--purple-soft:#F0E8F8;
+  --shadow:0 20px 60px rgba(30,35,55,.10);
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:Cairo,system-ui,sans-serif}
+a{text-decoration:none;color:inherit}
+.container{width:min(1120px,calc(100% - 32px));margin:auto}
+nav{height:72px;display:flex;align-items:center;justify-content:space-between}
+.brand{display:flex;align-items:center;gap:10px;font-weight:900;font-size:21px}
+.logo{width:42px;height:42px;border-radius:13px;background:var(--blue);color:white;display:grid;place-items:center;font-size:22px;box-shadow:0 9px 22px rgba(32,73,199,.22)}
+.navlinks{display:flex;gap:24px;color:var(--muted);font-size:14px;font-weight:700}
+.navlinks a:hover{color:var(--blue)}
+.hero{padding:65px 0 85px;position:relative;overflow:hidden}
+.hero:before{content:"";position:absolute;inset:-120px -20%;z-index:-1;background:
+linear-gradient(rgba(32,73,199,.045) 1px,transparent 1px),
+linear-gradient(90deg,rgba(32,73,199,.045) 1px,transparent 1px);
+background-size:42px 42px;transform:rotate(-3deg)}
+.hero-grid{display:grid;grid-template-columns:1.08fr .92fr;gap:55px;align-items:center}
+.eyebrow{display:inline-flex;align-items:center;gap:8px;padding:7px 12px;border:1px solid var(--border);background:rgba(255,255,255,.72);border-radius:999px;color:var(--blue);font-size:12px;font-weight:800}
+.eyebrow i{width:7px;height:7px;border-radius:50%;background:var(--green)}
+h1{font-size:clamp(42px,6vw,72px);line-height:1.05;margin:20px 0 17px;letter-spacing:-2px}
+h1 span{color:var(--blue)}
+.hero p{font-size:18px;line-height:2;color:var(--muted);max-width:620px;margin:0 0 27px}
+.actions{display:flex;gap:12px;flex-wrap:wrap}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:10px;border-radius:14px;padding:13px 20px;font-weight:800;font-size:15px;transition:.18s;cursor:pointer}
+.btn:hover{transform:translateY(-2px)}
+.primary{background:var(--blue);color:white;box-shadow:0 12px 25px rgba(32,73,199,.22)}
+.secondary{background:var(--surface);border:1px solid var(--border)}
+.note{margin-top:13px;font-size:11px;color:var(--muted)}
+.phone-wrap{display:flex;justify-content:center}
+.phone{width:min(330px,82vw);background:#101114;border:7px solid #101114;border-radius:37px;padding:7px;box-shadow:0 30px 70px rgba(0,0,0,.22);transform:rotate(1.5deg)}
+.screen{background:var(--bg);border-radius:27px;overflow:hidden;padding:13px;min-height:570px}
+.fake-top{display:flex;justify-content:space-between;align-items:center;font-size:10px;color:var(--muted);margin-bottom:13px}
+.fake-modes{display:grid;grid-template-columns:repeat(4,1fr);gap:5px}
+.mode{padding:8px 2px;text-align:center;border-radius:9px;background:#eeeef0;font-size:9px;font-weight:800}
+.mode.active{background:var(--blue);color:#fff}
+.display{margin-top:9px;background:#fff;border:1px solid var(--border);border-radius:16px;padding:14px;min-height:110px}
+.expr{font-family:"JetBrains Mono";font-size:12px;color:var(--muted);direction:ltr;text-align:left}
+.result{font-family:"JetBrains Mono";font-size:25px;font-weight:700;margin-top:17px;direction:ltr;text-align:left}
+.hint{font-size:9px;color:var(--muted);margin-top:5px}
+.keys{display:grid;grid-template-columns:repeat(4,1fr);gap:6px;margin-top:9px}
+.key{height:46px;border:1px solid var(--border);background:#fff;border-radius:10px;display:grid;place-items:center;font-family:"JetBrains Mono";font-size:13px;font-weight:700}
+.key.op{color:var(--blue);background:var(--blue-soft)}
+.key.eq{background:var(--blue);color:#fff;border-color:var(--blue)}
+section{padding:78px 0}
+.section-head{text-align:center;max-width:690px;margin:0 auto 35px}
+.kicker{color:var(--blue);font-size:12px;font-weight:900;letter-spacing:.5px}
+h2{font-size:34px;margin:8px 0 10px}
+.section-head p{color:var(--muted);line-height:1.9;margin:0}
+.modes{display:grid;grid-template-columns:repeat(4,1fr);gap:14px}
+.card{background:var(--surface);border:1px solid var(--border);border-radius:20px;padding:22px;box-shadow:0 7px 25px rgba(30,35,55,.04)}
+.card .icon{width:42px;height:42px;border-radius:12px;display:grid;place-items:center;font-weight:900;margin-bottom:15px}
+.card h3{margin:0 0 7px;font-size:18px}
+.card p{margin:0;color:var(--muted);font-size:13px;line-height:1.8}
+.blue .icon{background:var(--blue-soft);color:var(--blue)}
+.green .icon{background:var(--green-soft);color:var(--green)}
+.red .icon{background:var(--red-soft);color:var(--red)}
+.purple .icon{background:var(--purple-soft);color:var(--purple)}
+.feature-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+.feature{background:var(--surface);border:1px solid var(--border);border-radius:18px;padding:20px}
+.feature b{display:block;margin-bottom:5px}.feature span{font-size:13px;color:var(--muted);line-height:1.8}
+.download{background:var(--ink);color:white;border-radius:28px;padding:50px;display:flex;align-items:center;justify-content:space-between;gap:30px;box-shadow:var(--shadow)}
+.download h2{margin:0 0 8px;color:white}.download p{margin:0;color:#A1A1AA;font-size:14px}
+.download .primary{background:white;color:var(--ink);box-shadow:none}
+.info{display:flex;gap:10px;flex-wrap:wrap;margin-top:17px}
+.badge{border:1px solid #3F3F46;color:#D4D4D8;border-radius:999px;padding:6px 10px;font-size:11px}
+footer{border-top:1px solid var(--border);padding:25px 0;color:var(--muted);font-size:12px;display:flex;justify-content:space-between;gap:15px}
+@media(max-width:850px){
+ .hero-grid{grid-template-columns:1fr;text-align:center}.hero p{margin-left:auto;margin-right:auto}
+ .actions{justify-content:center}.phone-wrap{margin-top:10px}.navlinks{display:none}
+ .modes{grid-template-columns:repeat(2,1fr)}.feature-grid{grid-template-columns:1fr}
+ .download{padding:30px;flex-direction:column;text-align:center}
+ footer{flex-direction:column;text-align:center}
+}
+@media(max-width:480px){
+ .container{width:min(100% - 22px,1120px)}.hero{padding-top:40px}
+ h1{font-size:45px}.hero p{font-size:16px}.modes{grid-template-columns:1fr 1fr}
+ .card{padding:17px}.download{border-radius:22px}
+}
+</style>
+</head>
+<body>
+
+<header class="container">
+<nav>
+  <a class="brand" href="#"><span class="logo">م</span><span>حاسبتي</span></a>
+  <div class="navlinks">
+    <a href="#modes">الأوضاع</a>
+    <a href="#features">المميزات</a>
+    <a href="#download">التحميل</a>
+  </div>
+</nav>
+</header>
+
+<main>
+<section class="hero">
+<div class="container hero-grid">
+  <div>
+    <div class="eyebrow"><i></i> مصممة لطلاب الثانوية</div>
+    <h1>الحساب أسهل مع <span>حاسبتي.</span></h1>
+    <p>آلة حاسبة ثانوية تجمع الحساب اليومي مع دراسة الدوال، المعادلات، المتتاليات والرسم البياني — في واجهة عربية واضحة وسريعة.</p>
+    <div class="actions">
+      <a class="btn primary" href="hasibati-release.apk" download="حاسبتي.apk">↓ &nbsp; تحميل التطبيق APK</a>
+      <a class="btn secondary" href="#modes">اكتشف المميزات</a>
+    </div>
+    <div class="note">ملف APK مباشر • مجاني • لا توجد إعلانات في صفحة التحميل</div>
+  </div>
+
+  <div class="phone-wrap" aria-label="معاينة تطبيق حاسبتي">
+    <div class="phone">
+      <div class="screen">
+        <div class="fake-top"><b>حاسبتي</b><span>ليلي ◐</span></div>
+        <div class="fake-modes">
+          <div class="mode active">بدائي</div><div class="mode">عام</div><div class="mode">متقدم</div><div class="mode">مسائل</div>
+        </div>
+        <div class="display">
+          <div class="expr">√(25) + 3²</div>
+          <div class="result">14</div>
+          <div class="hint">أدخل الأرقام ثم =</div>
+        </div>
+        <div class="keys">
+          <div class="key">7</div><div class="key">8</div><div class="key">9</div><div class="key op">÷</div>
+          <div class="key">4</div><div class="key">5</div><div class="key">6</div><div class="key op">×</div>
+          <div class="key">1</div><div class="key">2</div><div class="key">3</div><div class="key op">−</div>
+          <div class="key">0</div><div class="key">.</div><div class="key eq">=</div><div class="key op">+</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+</section>
+
+<section id="modes">
+<div class="container">
+ <div class="section-head">
+   <div class="kicker">أربع طرق للعمل</div>
+   <h2>من الحساب البسيط إلى مسائل الثانوية</h2>
+   <p>اختر الوضع الذي يناسب المسألة بدل التنقل بين عدة أدوات.</p>
+ </div>
+ <div class="modes">
+   <article class="card blue"><div class="icon">＋</div><h3>بدائي</h3><p>للعمليات البسيطة: جمع، طرح، ضرب وقسمة.</p></article>
+   <article class="card green"><div class="icon">√</div><h3>عام</h3><p>كسور، جذور، قوى، كتابة علمية ومسائل الثانوية العامة.</p></article>
+   <article class="card red"><div class="icon">ƒ</div><h3>متقدم</h3><p>دراسة الدوال: جدول التغيرات، جدول الإشارة، الاشتقاق والرسم البياني.</p></article>
+   <article class="card purple"><div class="icon">∑</div><h3>مسائل</h3><p>معادلات، متباينات، أنظمة، نسب، إحصاء، PGCD/PPCM، تباديل، توافيق ومتتاليات.</p></article>
+ </div>
+</div>
+</section>
+
+<section id="features">
+<div class="container">
+ <div class="section-head">
+   <div class="kicker">مصممة للدراسة</div>
+   <h2>أدوات تساعدك على الفهم</h2>
+   <p>حاسبتي ليست مجرد شاشة أرقام؛ صُممت لتناسب طريقة حل مسائل الرياضيات في الثانوية.</p>
+ </div>
+ <div class="feature-grid">
+   <div class="feature"><b>📈 دراسة الدوال</b><span>رسم بياني وتتبع القيم مع أدوات لدراسة الدالة والاشتقاق والجذور والتغيرات.</span></div>
+   <div class="feature"><b>🧩 حل المسائل</b><span>أدخل المسألة ثم اعتمدها وانتقل إلى الأداة المناسبة للحل.</span></div>
+   <div class="feature"><b>🧮 المتتاليات</b><span>دراسة المتتاليات الحسابية والهندسية وحساب الحدود والمجاميع.</span></div>
+   <div class="feature"><b>📝 خطوات الحل</b><span>عرض خطوات مرتبطة بالحساب أو نوع المسألة لمتابعة طريقة الوصول إلى النتيجة.</span></div>
+   <div class="feature"><b>💾 حفظ محلي</b><span>يحفظ التطبيق بعض إعداداتك وذاكرتك وسجل الحسابات على الجهاز.</span></div>
+   <div class="feature"><b>☀️ / 🌙 مظهران</b><span>انتقل بين الوضع النهاري والليلي حسب وقت الدراسة وراحتك.</span></div>
+ </div>
+</div>
+</section>
+
+<section id="download">
+<div class="container">
+ <div class="download">
+   <div>
+     <h2>جاهز للحساب؟</h2>
+     <p>حمّل حاسبتي على هاتف Android وابدأ استخدامها مباشرة.</p>
+     <div class="info"><span class="badge">Android • APK</span><span class="badge">واجهة عربية</span><span class="badge">مجاني</span></div>
+   </div>
+   <a class="btn primary" href="hasibati-release.apk" download="حاسبتي.apk">تحميل حاسبتي</a>
+ </div>
+</div>
+</section>
+</main>
+
+<footer class="container">
+  <span>حاسبتي — أداة دراسية لطلاب الثانوية</span>
+  <span>تطوير: رياض القديم — RiyadeELK</span>
+  <span>riyade7elkgo@gmail.com</span>
+  <span>كل الحقوق محفوظة</span>
+</footer>
+
+</body>
+</html>
